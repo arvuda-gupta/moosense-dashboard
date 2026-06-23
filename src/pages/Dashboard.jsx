@@ -77,10 +77,10 @@ export default function Dashboard() {
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full min-w-0">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">System Overview</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">System Overview</h1>
           <div className="mt-2 flex flex-wrap gap-2 items-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 border border-green-300">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -100,7 +100,7 @@ export default function Dashboard() {
         <button 
           onClick={fetchData}
           disabled={isLoading}
-          className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-primary-foreground font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-sm"
+          className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-primary-foreground font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-sm animate-fade-in"
         >
           <Activity className={cn("w-4 h-4", isLoading && "animate-spin")} />
           {isLoading ? "Updating..." : "Monitor Live"}
@@ -108,64 +108,64 @@ export default function Dashboard() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 w-full max-w-full min-w-0">
+        <Card className="w-full min-w-0">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Telemetry Events</div>
-              <div className="p-2 bg-primary/10 rounded-lg text-primary">
+              <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider truncate">Telemetry Events</div>
+              <div className="p-2 bg-primary/10 rounded-lg text-primary shrink-0">
                 <Database className="w-5 h-5" />
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold">{activities.length}</span>
-              <span className="text-xs text-muted-foreground">Total telemetry rows from API</span>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold truncate">{activities.length}</span>
+              <span className="text-xs text-muted-foreground truncate">Total telemetry rows from API</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6">
+        <Card className="w-full min-w-0">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Active Devices</div>
-              <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+              <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider truncate">Active Devices</div>
+              <div className="p-2 bg-blue-100 rounded-lg text-blue-600 shrink-0">
                 <RadioTower className="w-5 h-5" />
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold">{activeDevices}</span>
-              <span className="text-xs text-muted-foreground">Unique NodeIds</span>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold truncate">{activeDevices}</span>
+              <span className="text-xs text-muted-foreground truncate">Unique NodeIds</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-6">
+        <Card className="w-full min-w-0">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Activity Types</div>
-              <div className="p-2 bg-amber-100 rounded-lg text-amber-600">
+              <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider truncate">Activity Types</div>
+              <div className="p-2 bg-amber-100 rounded-lg text-amber-600 shrink-0">
                 <Layers className="w-5 h-5" />
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-amber-600">{activityTypes}</span>
-              <span className="text-xs text-muted-foreground">Unique ActivityLabels</span>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-amber-600 truncate">{activityTypes}</span>
+              <span className="text-xs text-muted-foreground truncate">Unique ActivityLabels</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-green-200 shadow-sm relative overflow-hidden">
+        <Card className="border-green-200 shadow-sm relative overflow-hidden w-full min-w-0">
           <div className="absolute inset-x-0 bottom-0 h-1 bg-green-500"></div>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Reporting Devices</div>
-              <div className="p-2 bg-green-50 rounded-lg text-green-600">
+              <div className="text-xs sm:text-sm font-semibold text-muted-foreground uppercase tracking-wider truncate">Reporting Devices</div>
+              <div className="p-2 bg-green-50 rounded-lg text-green-600 shrink-0">
                 <Percent className="w-5 h-5" />
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-green-700 font-mono">{activeDevices} / {totalDevicesCount}</span>
-              <span className="text-xs text-muted-foreground">({((activeDevices / totalDevicesCount) * 100).toFixed(1)}% active ratio)</span>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-700 font-mono truncate">{activeDevices} / {totalDevicesCount}</span>
+              <span className="text-xs text-muted-foreground truncate">({((activeDevices / totalDevicesCount) * 100).toFixed(1)}% active ratio)</span>
             </div>
           </CardContent>
         </Card>

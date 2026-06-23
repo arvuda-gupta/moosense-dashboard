@@ -164,7 +164,7 @@ export default function Devices() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2">
           <RadioTower className="w-6 h-6 text-primary" />
           Livestock IoT Device Explorer
         </h1>
@@ -221,9 +221,9 @@ export default function Devices() {
       </div>
 
       {/* Main Grid: Map & Side panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[680px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[680px]">
         {/* Map Explorer Area */}
-        <Card className="lg:col-span-2 relative overflow-hidden bg-card border-border shadow-sm flex flex-col h-full">
+        <Card className="lg:col-span-2 relative overflow-hidden bg-card border-border shadow-sm flex flex-col h-[400px] sm:h-[500px] lg:h-full">
           {/* Map Controls */}
           <div className="p-4 border-b border-border flex flex-col sm:flex-row gap-3 items-center justify-between bg-card z-10">
             <div className="relative w-full sm:max-w-xs">
@@ -349,7 +349,7 @@ export default function Devices() {
         </Card>
 
         {/* Side Panel: Device Details list */}
-        <Card className="flex flex-col h-full overflow-hidden bg-card border-border shadow-sm">
+        <Card className="flex flex-col h-[350px] sm:h-[400px] lg:h-full overflow-hidden bg-card border-border shadow-sm">
           <div className="p-4 border-b border-border bg-muted/20 flex-shrink-0 flex items-center justify-between">
             <div>
               <h3 className="font-bold text-foreground">

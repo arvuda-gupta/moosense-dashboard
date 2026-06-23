@@ -5,8 +5,6 @@ import {
   Clock,
   Calendar,
   SlidersHorizontal,
-  ChevronLeft,
-  ChevronRight,
   Filter,
   RefreshCw
 } from "lucide-react";
@@ -16,7 +14,7 @@ export default function Cows() {
   // Dropdown list of unique Node IDs
   const [nodeIds, setNodeIds] = useState([]);
 
-  // API response datasets
+  // eslint-disable-next-line no-unused-vars
   const [rawRecords, setRawRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
 
@@ -172,8 +170,11 @@ export default function Cows() {
 
   // Perform initial fetch on mount (NodeId=All, no dates/times selected)
   useEffect(() => {
-    setNodeId("All");
-    fetchTelemetry("All", "", "", "", "", "device");
+    const timer = setTimeout(() => {
+      fetchTelemetry("All", "", "", "", "", "device");
+    }, 0);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleApply = (e) => {
@@ -234,7 +235,7 @@ export default function Cows() {
     <div className="space-y-6">
       {/* Header Banner */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">
           {isFiltered ? "Livestock Telemetry Explorer" : "Livestock Device Explorer"}
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -251,7 +252,7 @@ export default function Cows() {
             <Filter className="w-4 h-4 text-primary" /> Telemetry Filtering
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Node ID Selection */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Node ID</label>
@@ -320,17 +321,17 @@ export default function Cows() {
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-2">
             <button
               type="button"
               onClick={handleReset}
-              className="bg-muted hover:bg-muted/80 text-foreground border border-border font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors text-sm"
+              className="w-full sm:w-auto bg-muted hover:bg-muted/80 text-foreground border border-border font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
             >
               <RefreshCw className="w-4 h-4" /> Reset Filter
             </button>
             <button
               type="submit"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2 px-5 rounded-lg flex items-center gap-2 transition-colors text-sm"
+              className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2 px-5 rounded-lg flex items-center justify-center gap-2 transition-colors text-sm"
             >
               <Filter className="w-4 h-4" /> Apply Filter
             </button>
@@ -445,11 +446,11 @@ export default function Cows() {
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-muted-foreground uppercase bg-muted/40 border-b border-border">
                 <tr>
-                  <th className="px-6 py-4 font-semibold">Node ID</th>
+                  <th className="px-6 py-4 font-semibold whitespace-nowrap">Node ID</th>
                   {isFiltered && (
                     <>
-                      <th className="px-6 py-4 font-semibold">Activity</th>
-                      <th className="px-6 py-4 font-semibold">Timestamp</th>
+                      <th className="px-6 py-4 font-semibold whitespace-nowrap">Activity</th>
+                      <th className="px-6 py-4 font-semibold whitespace-nowrap">Timestamp</th>
                     </>
                   )}
                 </tr>
@@ -465,10 +466,10 @@ export default function Cows() {
                       }
                     }}
                   >
-                    <td className={`px-6 py-3.5 font-semibold text-primary ${!isFiltered ? "hover:underline" : ""}`}>{item.NodeId}</td>
+                    <td className={`px-6 py-3.5 font-semibold text-primary whitespace-nowrap ${!isFiltered ? "hover:underline" : ""}`}>{item.NodeId}</td>
                     {isFiltered && (
                       <>
-                        <td className="px-6 py-3.5">
+                        <td className="px-6 py-3.5 whitespace-nowrap">
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-border bg-card shadow-sm">
                             <span className={`w-1.5 h-1.5 rounded-full ${item.ActivityLabel === "MOV" ? "bg-green-500" :
                               item.ActivityLabel === "FEP" ? "bg-amber-500" :
@@ -477,7 +478,7 @@ export default function Cows() {
                             {item.ActivityLabel}
                           </span>
                         </td>
-                        <td className="px-6 py-3.5 font-mono text-muted-foreground text-xs">{item.TimeStamp}</td>
+                        <td className="px-6 py-3.5 font-mono text-muted-foreground text-xs whitespace-nowrap">{item.TimeStamp}</td>
                       </>
                     )}
                   </tr>
