@@ -67,21 +67,43 @@ const devicesData = [
 ];
 
 const stateCenters = {
-  "Punjab": { x: 190, y: 155 },
-  "Haryana": { x: 215, y: 185 },
-  "Rajasthan": { x: 165, y: 245 },
-  "Gujarat": { x: 110, y: 320 },
-  "Uttar Pradesh": { x: 295, y: 225 },
-  "Madhya Pradesh": { x: 275, y: 325 },
-  "Maharashtra": { x: 220, y: 425 },
-  "Karnataka": { x: 200, y: 535 },
-  "Tamil Nadu": { x: 260, y: 605 },
-  "Telangana": { x: 270, y: 465 },
-  "Andhra Pradesh": { x: 295, y: 515 },
-  "Kerala": { x: 210, y: 610 },
-  "West Bengal": { x: 425, y: 325 },
-  "Odisha": { x: 365, y: 385 },
-  "Assam": { x: 510, y: 245 }
+  "Andaman and Nicobar Islands": { x: 521, y: 609 },
+  "Andhra Pradesh": { x: 263, y: 500 },
+  "Arunachal Pradesh": { x: 550, y: 224 },
+  "Assam": { x: 516, y: 271 },
+  "Bihar": { x: 369, y: 275 },
+  "Chandigarh": { x: 180, y: 160 },
+  "Chhattisgarh": { x: 296, y: 388 },
+  "Daman and Diu": { x: 55, y: 391 },
+  "Delhi": { x: 186, y: 210 },
+  "Dadra and Nagar Haveli": { x: 102, y: 405 },
+  "Goa": { x: 122, y: 512 },
+  "Gujarat": { x: 66, y: 355 },
+  "Himachal Pradesh": { x: 190, y: 133 },
+  "Haryana": { x: 164, y: 194 },
+  "Jharkhand": { x: 366, y: 327 },
+  "Jammu and Kashmir": { x: 144, y: 88 },
+  "Karnataka": { x: 170, y: 518 },
+  "Kerala": { x: 166, y: 615 },
+  "Ladakh": { x: 173, y: 60 },
+  "Lakshadweep": { x: 99, y: 627 },
+  "Maharashtra": { x: 179, y: 435 },
+  "Meghalaya": { x: 485, y: 283 },
+  "Manipur": { x: 537, y: 301 },
+  "Madhya Pradesh": { x: 214, y: 319 },
+  "Mizoram": { x: 516, y: 337 },
+  "Nagaland": { x: 547, y: 270 },
+  "Odisha": { x: 340, y: 405 },
+  "Punjab": { x: 151, y: 152 },
+  "Puducherry": { x: 268, y: 545 },
+  "Rajasthan": { x: 119, y: 257 },
+  "Sikkim": { x: 424, y: 235 },
+  "Telangana": { x: 237, y: 457 },
+  "Tamil Nadu": { x: 211, y: 609 },
+  "Tripura": { x: 493, y: 325 },
+  "Uttar Pradesh": { x: 265, y: 245 },
+  "Uttarakhand": { x: 232, y: 176 },
+  "West Bengal": { x: 412, y: 310 }
 };
 
 export default function Devices() {
@@ -260,88 +282,105 @@ export default function Devices() {
           </div>
 
           {/* Map Container */}
-          <div className="flex-1 relative bg-slate-50 dark:bg-zinc-950/40 w-full h-full overflow-hidden flex items-center justify-center p-4
-            bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:32px_32px] 
-            dark:bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)]"
-          >
-            <div className="w-full h-full max-w-[500px] max-h-[580px] relative flex items-center justify-center">
+          <div className="flex-1 relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-zinc-950/20 dark:to-zinc-900/40 w-full h-full overflow-hidden flex items-center justify-center p-4 border border-border/50 rounded-lg">
+            <div className="w-[90%] sm:w-[80%] h-[90%] sm:h-[80%] max-w-[580px] max-h-[660px] relative flex items-center justify-center">
               <svg 
                 viewBox={indiaMapData.viewBox}
                 className="w-full h-full object-contain drop-shadow-md select-none"
               >
                 {/* SVG Transform group for Zoom & Translate */}
                 <g style={zoomTransform}>
-                  {/* Render State Paths */}
-                  {indiaMapData.locations.map((loc) => {
-                    const isSelected = activeState === loc.name;
-                    return (
-                      <path
-                        key={loc.id}
-                        d={loc.path}
-                        onClick={() => handleStateClick(loc.name)}
-                        className={cn(
-                          "transition-all duration-300 stroke-1 cursor-pointer focus:outline-none",
-                          isSelected
-                            ? "fill-primary/30 stroke-primary stroke-[1.5px]"
-                            : "fill-slate-200/80 dark:fill-zinc-800/80 stroke-slate-400 dark:stroke-zinc-700 hover:fill-primary/15 dark:hover:fill-primary/20 hover:stroke-primary/50"
-                        )}
-                        title={loc.name}
-                      />
-                    );
-                  })}
+                  {/* Render State Paths translated from react-svgmap-india space to 0 0 612 696 */}
+                  <g transform="translate(114, 50.4)">
+                    {indiaMapData.locations.map((loc) => {
+                      const isSelected = activeState === loc.name;
+                      return (
+                        <path
+                          key={loc.id}
+                          d={loc.path}
+                          onClick={() => handleStateClick(loc.name)}
+                          className={cn(
+                            "transition-all duration-300 stroke-1 cursor-pointer focus:outline-none",
+                            isSelected
+                              ? "fill-primary/30 stroke-primary stroke-[1.5px]"
+                              : "fill-slate-200/80 dark:fill-zinc-800/80 stroke-slate-400 dark:stroke-zinc-700 hover:fill-primary/15 dark:hover:fill-primary/20 hover:stroke-primary/50"
+                          )}
+                          title={loc.name}
+                        />
+                      );
+                    })}
+                  </g>
 
-                  {/* Render Markers/Pins on state centers */}
-                  {Object.entries(stateCenters).map(([stateName, center]) => {
-                    const isSelected = activeState === stateName;
-                    const stateDevices = devicesData.filter(d => d.state === stateName);
-                    
-                    return (
-                      <g 
-                        key={stateName} 
-                        transform={`translate(${center.x}, ${center.y})`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleStateClick(stateName);
-                        }}
-                        className="cursor-pointer group"
-                      >
-                        {/* Pulse Ring */}
-                        <circle 
-                          r={isSelected ? "18" : "12"} 
-                          className={cn(
-                            "fill-primary/20 transition-all duration-300",
-                            isSelected ? "animate-pulse" : "group-hover:scale-125"
-                          )} 
-                        />
-                        {/* Outer Glow */}
-                        <circle 
-                          r={isSelected ? "8" : "6"} 
-                          className={cn(
-                            "fill-primary transition-all duration-300 stroke-background",
-                            isSelected ? "stroke-[2px]" : "stroke-1"
-                          )} 
-                        />
-                        {/* Device Count Label */}
-                        <g transform="translate(0, -16)" className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <rect 
-                            x="-22" 
-                            y="-14" 
-                            width="44" 
-                            height="18" 
-                            rx="4" 
-                            className="fill-zinc-900/90 dark:fill-zinc-100" 
+                  {/* Render Markers/Pins on state centers - filtered only to states with devices */}
+                  {Object.entries(stateCenters)
+                    .filter(([stateName]) => devicesData.some(d => d.state === stateName))
+                    .map(([stateName, center]) => {
+                      const isSelected = activeState === stateName;
+                      const stateDevices = devicesData.filter(d => d.state === stateName);
+                      
+                      return (
+                        <g 
+                          key={stateName} 
+                          transform={`translate(${center.x}, ${center.y})`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleStateClick(stateName);
+                          }}
+                          className="cursor-pointer group"
+                        >
+                          {/* Pulse Ring with smooth scale-up hover */}
+                          <circle 
+                            r={isSelected ? 18 : 12} 
+                            className={cn(
+                              "fill-primary/20 transition-all duration-300 group-hover:scale-125",
+                              isSelected ? "animate-pulse" : ""
+                            )} 
                           />
-                          <text 
-                            y="-2" 
-                            textAnchor="middle" 
-                            className="fill-zinc-100 dark:fill-zinc-900 text-[10px] font-bold"
+                          {/* Outer Glow */}
+                          <circle 
+                            r={isSelected ? 8 : 6} 
+                            className={cn(
+                              "fill-primary transition-all duration-300 stroke-background group-hover:fill-primary/80 group-hover:scale-110",
+                              isSelected ? "stroke-[2px]" : "stroke-1"
+                            )} 
+                          />
+                          {/* Professional Hover Tooltip Overlay */}
+                          <g 
+                            transform="translate(0, -22)" 
+                            className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50"
                           >
-                            {stateDevices.length} Dev
-                          </text>
+                            <rect 
+                              x="-70" 
+                              y="-42" 
+                              width="140" 
+                              height="46" 
+                              rx="6" 
+                              className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30 stroke shadow-xl"
+                            />
+                            <polygon 
+                              points="-6,-4 6,-4 0,2" 
+                              className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30"
+                            />
+                            <text 
+                              x="0" 
+                              y="-28" 
+                              textAnchor="middle" 
+                              className="fill-zinc-50 font-bold text-[10px] tracking-wide"
+                            >
+                              {stateName}
+                            </text>
+                            <text 
+                              x="0" 
+                              y="-14" 
+                              textAnchor="middle" 
+                              className="fill-primary text-[8px] font-mono font-semibold"
+                            >
+                              Nodes: {stateDevices.map(d => d.id).join(', ')}
+                            </text>
+                          </g>
                         </g>
-                      </g>
-                    );
-                  })}
+                      );
+                    })}
                 </g>
               </svg>
             </div>

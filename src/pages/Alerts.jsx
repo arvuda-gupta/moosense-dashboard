@@ -1,4 +1,4 @@
-import { BellRing, ShieldAlert, Thermometer, BatteryLow, WifiOff } from 'lucide-react';
+import { BellRing, ShieldAlert, Thermometer, BatteryLow } from 'lucide-react';
 import { alerts } from '../data/mockData';
 import { cn } from '../utils/cn';
 
