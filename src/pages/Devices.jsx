@@ -14,56 +14,67 @@ import { indiaMapData } from '../data/indiaMapData';
 
 // 50 Devices (IDs 120-169) distributed across 15 states
 const devicesData = [
-  { id: 120, state: "Punjab" },
-  { id: 121, state: "Punjab" },
-  { id: 122, state: "Punjab" },
-  { id: 123, state: "Haryana" },
-  { id: 124, state: "Haryana" },
-  { id: 125, state: "Rajasthan" },
-  { id: 126, state: "Rajasthan" },
-  { id: 127, state: "Rajasthan" },
-  { id: 128, state: "Gujarat" },
-  { id: 129, state: "Gujarat" },
-  { id: 130, state: "Gujarat" },
-  { id: 131, state: "Gujarat" },
-  { id: 132, state: "Uttar Pradesh" },
-  { id: 133, state: "Uttar Pradesh" },
-  { id: 134, state: "Uttar Pradesh" },
-  { id: 135, state: "Uttar Pradesh" },
-  { id: 136, state: "Madhya Pradesh" },
-  { id: 137, state: "Madhya Pradesh" },
-  { id: 138, state: "Madhya Pradesh" },
-  { id: 139, state: "Maharashtra" },
-  { id: 140, state: "Maharashtra" },
-  { id: 141, state: "Maharashtra" },
-  { id: 142, state: "Maharashtra" },
-  { id: 143, state: "Karnataka" },
-  { id: 144, state: "Karnataka" },
-  { id: 145, state: "Karnataka" },
-  { id: 146, state: "Tamil Nadu" },
-  { id: 147, state: "Tamil Nadu" },
-  { id: 148, state: "Tamil Nadu" },
-  { id: 149, state: "Tamil Nadu" },
-  { id: 150, state: "Telangana" },
-  { id: 151, state: "Telangana" },
-  { id: 152, state: "Andhra Pradesh" },
-  { id: 153, state: "Andhra Pradesh" },
-  { id: 154, state: "Andhra Pradesh" },
-  { id: 155, state: "Andhra Pradesh" },
-  { id: 156, state: "Kerala" },
-  { id: 157, state: "Kerala" },
-  { id: 158, state: "Kerala" },
-  { id: 159, state: "West Bengal" },
-  { id: 160, state: "West Bengal" },
-  { id: 161, state: "West Bengal" },
-  { id: 162, state: "Odisha" },
-  { id: 163, state: "Odisha" },
-  { id: 164, state: "Odisha" },
-  { id: 165, state: "Odisha" },
-  { id: 166, state: "Assam" },
-  { id: 167, state: "Assam" },
-  { id: 168, state: "Assam" },
-  { id: 169, state: "Assam" }
+  // Ludhiana, Punjab (10 nodes)
+  { id: 120, state: "Ludhiana, Punjab" },
+  { id: 121, state: "Ludhiana, Punjab" },
+  { id: 122, state: "Ludhiana, Punjab" },
+  { id: 123, state: "Ludhiana, Punjab" },
+  { id: 124, state: "Ludhiana, Punjab" },
+  { id: 125, state: "Ludhiana, Punjab" },
+  { id: 126, state: "Ludhiana, Punjab" },
+  { id: 127, state: "Ludhiana, Punjab" },
+  { id: 128, state: "Ludhiana, Punjab" },
+  { id: 129, state: "Ludhiana, Punjab" },
+
+  // Amritsar, Punjab (10 nodes)
+  { id: 130, state: "Amritsar, Punjab" },
+  { id: 131, state: "Amritsar, Punjab" },
+  { id: 132, state: "Amritsar, Punjab" },
+  { id: 133, state: "Amritsar, Punjab" },
+  { id: 134, state: "Amritsar, Punjab" },
+  { id: 135, state: "Amritsar, Punjab" },
+  { id: 136, state: "Amritsar, Punjab" },
+  { id: 137, state: "Amritsar, Punjab" },
+  { id: 138, state: "Amritsar, Punjab" },
+  { id: 139, state: "Amritsar, Punjab" },
+
+  // Jalandhar, Punjab (10 nodes)
+  { id: 140, state: "Jalandhar, Punjab" },
+  { id: 141, state: "Jalandhar, Punjab" },
+  { id: 142, state: "Jalandhar, Punjab" },
+  { id: 143, state: "Jalandhar, Punjab" },
+  { id: 144, state: "Jalandhar, Punjab" },
+  { id: 145, state: "Jalandhar, Punjab" },
+  { id: 146, state: "Jalandhar, Punjab" },
+  { id: 147, state: "Jalandhar, Punjab" },
+  { id: 148, state: "Jalandhar, Punjab" },
+  { id: 149, state: "Jalandhar, Punjab" },
+
+  // Patiala, Punjab (9 nodes)
+  { id: 150, state: "Patiala, Punjab" },
+  { id: 151, state: "Patiala, Punjab" },
+  { id: 152, state: "Patiala, Punjab" },
+  { id: 153, state: "Patiala, Punjab" },
+  { id: 154, state: "Patiala, Punjab" },
+  { id: 155, state: "Patiala, Punjab" },
+  { id: 156, state: "Patiala, Punjab" },
+  { id: 157, state: "Patiala, Punjab" },
+  { id: 158, state: "Patiala, Punjab" },
+
+  // Bathinda, Punjab (8 nodes)
+  { id: 159, state: "Bathinda, Punjab" },
+  { id: 160, state: "Bathinda, Punjab" },
+  { id: 161, state: "Bathinda, Punjab" },
+  { id: 162, state: "Bathinda, Punjab" },
+  { id: 163, state: "Bathinda, Punjab" },
+  { id: 164, state: "Bathinda, Punjab" },
+  { id: 165, state: "Bathinda, Punjab" },
+  { id: 166, state: "Bathinda, Punjab" },
+
+  // Uttar Pradesh (3 nodes, near Punjab)
+  { id: 167, state: "Uttar Pradesh" },
+  { id: 168, state: "Uttar Pradesh" },
+  { id: 169, state: "Uttar Pradesh" }
 ];
 
 const stateCenters = {
@@ -148,7 +159,7 @@ export default function Devices() {
   // Filter devices by selected/searched state
   const displayedDevices = useMemo(() => {
     if (!activeState) return devicesData;
-    return devicesData.filter(d => d.state === activeState);
+    return devicesData.filter(d => d.state === activeState || d.state.includes(activeState));
   }, [activeState]);
 
   // Compute zoom & translation transform based on selection/search
@@ -293,7 +304,7 @@ export default function Devices() {
                   {/* Render State Paths translated from react-svgmap-india space to 0 0 612 696 */}
                   <g transform="translate(114, 50.4)">
                     {indiaMapData.locations.map((loc) => {
-                      const isSelected = activeState === loc.name;
+                      const isSelected = activeState === loc.name || (activeState && activeState.includes(loc.name));
                       return (
                         <path
                           key={loc.id}
