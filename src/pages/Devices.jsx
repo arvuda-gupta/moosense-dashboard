@@ -12,72 +12,89 @@ import { cn } from '../utils/cn';
 import { Card, CardContent } from '../components/ui/Card';
 import { indiaMapData } from '../data/indiaMapData';
 
-// 50 Devices (IDs 120-169) distributed across 15 states
+// 50 Devices (IDs 120-169) partitioned around Ropar and nearby pilot agricultural regions
 const devicesData = [
-  // Ludhiana, Punjab (10 nodes)
-  { id: 120, state: "Ludhiana, Punjab" },
-  { id: 121, state: "Ludhiana, Punjab" },
-  { id: 122, state: "Ludhiana, Punjab" },
-  { id: 123, state: "Ludhiana, Punjab" },
-  { id: 124, state: "Ludhiana, Punjab" },
-  { id: 125, state: "Ludhiana, Punjab" },
-  { id: 126, state: "Ludhiana, Punjab" },
-  { id: 127, state: "Ludhiana, Punjab" },
-  { id: 128, state: "Ludhiana, Punjab" },
-  { id: 129, state: "Ludhiana, Punjab" },
+  // Ropar (Rupnagar), Punjab (8 nodes)
+  { id: 120, state: "Ropar (Rupnagar)" },
+  { id: 121, state: "Ropar (Rupnagar)" },
+  { id: 122, state: "Ropar (Rupnagar)" },
+  { id: 123, state: "Ropar (Rupnagar)" },
+  { id: 124, state: "Ropar (Rupnagar)" },
+  { id: 125, state: "Ropar (Rupnagar)" },
+  { id: 126, state: "Ropar (Rupnagar)" },
+  { id: 127, state: "Ropar (Rupnagar)" },
 
-  // Amritsar, Punjab (10 nodes)
-  { id: 130, state: "Amritsar, Punjab" },
-  { id: 131, state: "Amritsar, Punjab" },
-  { id: 132, state: "Amritsar, Punjab" },
-  { id: 133, state: "Amritsar, Punjab" },
-  { id: 134, state: "Amritsar, Punjab" },
-  { id: 135, state: "Amritsar, Punjab" },
-  { id: 136, state: "Amritsar, Punjab" },
-  { id: 137, state: "Amritsar, Punjab" },
-  { id: 138, state: "Amritsar, Punjab" },
-  { id: 139, state: "Amritsar, Punjab" },
+  // Mohali, Punjab (6 nodes)
+  { id: 128, state: "Mohali" },
+  { id: 129, state: "Mohali" },
+  { id: 130, state: "Mohali" },
+  { id: 131, state: "Mohali" },
+  { id: 132, state: "Mohali" },
+  { id: 133, state: "Mohali" },
 
-  // Jalandhar, Punjab (10 nodes)
-  { id: 140, state: "Jalandhar, Punjab" },
-  { id: 141, state: "Jalandhar, Punjab" },
-  { id: 142, state: "Jalandhar, Punjab" },
-  { id: 143, state: "Jalandhar, Punjab" },
-  { id: 144, state: "Jalandhar, Punjab" },
-  { id: 145, state: "Jalandhar, Punjab" },
-  { id: 146, state: "Jalandhar, Punjab" },
-  { id: 147, state: "Jalandhar, Punjab" },
-  { id: 148, state: "Jalandhar, Punjab" },
-  { id: 149, state: "Jalandhar, Punjab" },
+  // Patiala, Punjab (6 nodes)
+  { id: 134, state: "Patiala" },
+  { id: 135, state: "Patiala" },
+  { id: 136, state: "Patiala" },
+  { id: 137, state: "Patiala" },
+  { id: 138, state: "Patiala" },
+  { id: 139, state: "Patiala" },
 
-  // Patiala, Punjab (9 nodes)
-  { id: 150, state: "Patiala, Punjab" },
-  { id: 151, state: "Patiala, Punjab" },
-  { id: 152, state: "Patiala, Punjab" },
-  { id: 153, state: "Patiala, Punjab" },
-  { id: 154, state: "Patiala, Punjab" },
-  { id: 155, state: "Patiala, Punjab" },
-  { id: 156, state: "Patiala, Punjab" },
-  { id: 157, state: "Patiala, Punjab" },
-  { id: 158, state: "Patiala, Punjab" },
+  // Ludhiana, Punjab (6 nodes)
+  { id: 140, state: "Ludhiana" },
+  { id: 141, state: "Ludhiana" },
+  { id: 142, state: "Ludhiana" },
+  { id: 143, state: "Ludhiana" },
+  { id: 144, state: "Ludhiana" },
+  { id: 145, state: "Ludhiana" },
 
-  // Bathinda, Punjab (8 nodes)
-  { id: 159, state: "Bathinda, Punjab" },
-  { id: 160, state: "Bathinda, Punjab" },
-  { id: 161, state: "Bathinda, Punjab" },
-  { id: 162, state: "Bathinda, Punjab" },
-  { id: 163, state: "Bathinda, Punjab" },
-  { id: 164, state: "Bathinda, Punjab" },
-  { id: 165, state: "Bathinda, Punjab" },
-  { id: 166, state: "Bathinda, Punjab" },
+  // Jalandhar, Punjab (4 nodes)
+  { id: 146, state: "Jalandhar" },
+  { id: 147, state: "Jalandhar" },
+  { id: 148, state: "Jalandhar" },
+  { id: 149, state: "Jalandhar" },
 
-  // Uttar Pradesh (3 nodes, near Punjab)
-  { id: 167, state: "Uttar Pradesh" },
-  { id: 168, state: "Uttar Pradesh" },
-  { id: 169, state: "Uttar Pradesh" }
+  // Amritsar, Punjab (3 nodes)
+  { id: 150, state: "Amritsar" },
+  { id: 151, state: "Amritsar" },
+  { id: 152, state: "Amritsar" },
+
+  // Bathinda, Punjab (3 nodes)
+  { id: 153, state: "Bathinda" },
+  { id: 154, state: "Bathinda" },
+  { id: 155, state: "Bathinda" },
+
+  // Saharanpur, Uttar Pradesh (1 node)
+  { id: 156, state: "Saharanpur" },
+
+  // Meerut, Uttar Pradesh (1 node)
+  { id: 157, state: "Meerut" },
+
+  // Noida, Uttar Pradesh (1 node)
+  { id: 158, state: "Noida" },
+
+  // Ambala, Haryana (3 nodes)
+  { id: 159, state: "Ambala" },
+  { id: 160, state: "Ambala" },
+  { id: 161, state: "Ambala" },
+
+  // Kurukshetra, Haryana (3 nodes)
+  { id: 162, state: "Kurukshetra" },
+  { id: 163, state: "Kurukshetra" },
+  { id: 164, state: "Kurukshetra" },
+
+  // Una, Himachal Pradesh (3 nodes)
+  { id: 165, state: "Una" },
+  { id: 166, state: "Una" },
+  { id: 167, state: "Una" },
+
+  // Solan, Himachal Pradesh (2 nodes)
+  { id: 168, state: "Solan" },
+  { id: 169, state: "Solan" }
 ];
 
 const stateCenters = {
+  // States centroids for broad queries
   "Andaman and Nicobar Islands": { x: 521, y: 609 },
   "Andhra Pradesh": { x: 263, y: 500 },
   "Arunachal Pradesh": { x: 550, y: 224 },
@@ -114,7 +131,40 @@ const stateCenters = {
   "Tripura": { x: 493, y: 325 },
   "Uttar Pradesh": { x: 265, y: 245 },
   "Uttarakhand": { x: 232, y: 176 },
-  "West Bengal": { x: 412, y: 310 }
+  "West Bengal": { x: 412, y: 310 },
+
+  // Pilot deployment region centroids
+  "Ropar (Rupnagar)": { x: 162, y: 142 },
+  "Mohali": { x: 166, y: 149 },
+  "Patiala": { x: 160, y: 156 },
+  "Ludhiana": { x: 153, y: 147 },
+  "Jalandhar": { x: 148, y: 141 },
+  "Amritsar": { x: 140, y: 137 },
+  "Bathinda": { x: 142, y: 158 },
+  "Saharanpur": { x: 181, y: 166 },
+  "Meerut": { x: 188, y: 185 },
+  "Noida": { x: 186, y: 202 },
+  "Ambala": { x: 172, y: 154 },
+  "Kurukshetra": { x: 174, y: 163 },
+  "Una": { x: 164, y: 134 },
+  "Solan": { x: 171, y: 142 }
+};
+
+const regionToState = {
+  "Ropar (Rupnagar)": "Punjab",
+  "Mohali": "Punjab",
+  "Patiala": "Punjab",
+  "Ludhiana": "Punjab",
+  "Jalandhar": "Punjab",
+  "Amritsar": "Punjab",
+  "Bathinda": "Punjab",
+  "Saharanpur": "Uttar Pradesh",
+  "Meerut": "Uttar Pradesh",
+  "Noida": "Uttar Pradesh",
+  "Ambala": "Haryana",
+  "Kurukshetra": "Haryana",
+  "Una": "Himachal Pradesh",
+  "Solan": "Himachal Pradesh"
 };
 
 export default function Devices() {
@@ -156,24 +206,42 @@ export default function Devices() {
   // Active state is derived from search match or selection
   const activeState = searchedState || selectedState;
 
-  // Filter devices by selected/searched state
+  // Filter devices by selected/searched state - maps regions to states correctly
   const displayedDevices = useMemo(() => {
     if (!activeState) return devicesData;
-    return devicesData.filter(d => d.state === activeState || d.state.includes(activeState));
+    return devicesData.filter(d => 
+      d.state === activeState || 
+      regionToState[d.state] === activeState
+    );
   }, [activeState]);
 
   // Compute zoom & translation transform based on selection/search
   const zoomTransform = useMemo(() => {
-    if (!activeState || !stateCenters[activeState]) {
+    // If no state/region is active, default to a focused, centered view on Punjab & surrounding areas
+    if (!activeState) {
+      const defaultCenter = { x: 162, y: 154 }; // Centroid of the pilot area
+      const defaultScale = 3.2; // Zoomed in focus on Punjab/Haryana/HP/West UP
+      const tx = 306 - defaultCenter.x * defaultScale;
+      const ty = 348 - defaultCenter.y * defaultScale;
+      return {
+        transform: `translate(${tx}px, ${ty}px) scale(${defaultScale})`,
+        transformOrigin: '0 0',
+        transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+      };
+    }
+
+    const center = stateCenters[activeState];
+    if (!center) {
       return {
         transform: 'translate(0px, 0px) scale(1)',
         transformOrigin: 'center center',
         transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
       };
     }
-    const center = stateCenters[activeState];
-    const scale = 1.8;
-    // Dimensions are 612 x 696 based on viewBox
+    
+    // Zoom in closer for specific cities, moderate zoom for broad state selections
+    const isState = ["Punjab", "Haryana", "Himachal Pradesh", "Uttar Pradesh"].includes(activeState);
+    const scale = isState ? 3.5 : 5.2;
     const tx = 306 - center.x * scale;
     const ty = 348 - center.y * scale;
     return {
@@ -304,7 +372,7 @@ export default function Devices() {
                   {/* Render State Paths translated from react-svgmap-india space to 0 0 612 696 */}
                   <g transform="translate(114, 50.4)">
                     {indiaMapData.locations.map((loc) => {
-                      const isSelected = activeState === loc.name || (activeState && activeState.includes(loc.name));
+                      const isSelected = activeState === loc.name || (activeState && regionToState[activeState] === loc.name);
                       return (
                         <path
                           key={loc.id}
@@ -402,43 +470,24 @@ export default function Devices() {
         <Card className="flex flex-col h-[350px] sm:h-[400px] lg:h-full overflow-hidden bg-card border-border shadow-sm">
           <div className="p-4 border-b border-border bg-muted/20 flex-shrink-0 flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-foreground">
-                {activeState ? `${activeState} Deployments` : "All Device Nodes"}
+              <h3 className="font-bold text-foreground text-sm sm:text-base">
+                {activeState ? `${activeState} Details` : "All Hub Deployments"}
               </h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Showing {displayedDevices.length} collar nodes
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">
+                {activeState && regionToState[activeState]
+                  ? `Region in ${regionToState[activeState]}`
+                  : activeState
+                  ? `State-level Overview`
+                  : `Pilot Project Overview`}
               </p>
             </div>
             {activeState && (
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2.5 py-1 rounded-full border border-primary/20">
-                Filtered
+              <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2.5 py-1 rounded-full border border-primary/20">
+                Active View
               </span>
             )}
           </div>
 
-          {/* List area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-none">
-            {displayedDevices.length > 0 ? (
-              displayedDevices.map((device) => {
-                const isHighlighted = searchQuery && device.id.toString() === searchQuery.trim();
-                
-                return (
-                  <div 
-                    key={device.id} 
-                    className={cn(
-                      "flex items-center justify-between p-3.5 rounded-lg border transition-all duration-200",
-                      isHighlighted 
-                        ? "bg-primary/10 border-primary ring-2 ring-primary/20 scale-[1.02] shadow-sm"
-                        : "bg-muted/30 dark:bg-muted/5 border-border hover:border-muted-foreground/30 hover:bg-muted/50"
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "p-2 rounded-lg",
-                        isHighlighted ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
-                      )}>
-                        <Cpu className="w-4 h-4" />
-                      </div>
                       <div>
                         <div className="font-mono text-sm font-bold text-foreground">
                           Node ID: #{device.id}
