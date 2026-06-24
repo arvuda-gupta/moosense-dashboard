@@ -12,76 +12,56 @@ import { cn } from '../utils/cn';
 import { Card, CardContent } from '../components/ui/Card';
 import { indiaMapData } from '../data/indiaMapData';
 
-// 50 Devices (IDs 120-169) partitioned non-sequentially around Punjab and Western UP regions
+// 30 Devices partitioned non-sequentially around Punjab (3-4 per region) and Western UP (2 per region)
 const devicesData = [
-  // Ropar, Punjab (6 nodes)
+  // Ropar, Punjab (4 nodes)
   { id: 120, state: "Ropar" },
   { id: 127, state: "Ropar" },
   { id: 135, state: "Ropar" },
   { id: 146, state: "Ropar" },
-  { id: 153, state: "Ropar" },
-  { id: 160, state: "Ropar" },
 
-  // Mohali, Punjab (6 nodes)
+  // Mohali, Punjab (3 nodes)
   { id: 121, state: "Mohali" },
-  { id: 128, state: "Mohali" },
-  { id: 136, state: "Mohali" },
-  { id: 147, state: "Mohali" },
-  { id: 154, state: "Mohali" },
-  { id: 161, state: "Mohali" },
+  { id: 132, state: "Mohali" },
+  { id: 148, state: "Mohali" },
 
-  // Ludhiana, Punjab (6 nodes)
-  { id: 122, state: "Ludhiana" },
-  { id: 129, state: "Ludhiana" },
-  { id: 137, state: "Ludhiana" },
-  { id: 148, state: "Ludhiana" },
-  { id: 155, state: "Ludhiana" },
+  // Ludhiana, Punjab (4 nodes)
+  { id: 124, state: "Ludhiana" },
+  { id: 139, state: "Ludhiana" },
+  { id: 151, state: "Ludhiana" },
   { id: 162, state: "Ludhiana" },
 
-  // Patiala, Punjab (6 nodes)
+  // Patiala, Punjab (3 nodes)
   { id: 123, state: "Patiala" },
-  { id: 130, state: "Patiala" },
-  { id: 138, state: "Patiala" },
-  { id: 149, state: "Patiala" },
-  { id: 156, state: "Patiala" },
-  { id: 163, state: "Patiala" },
+  { id: 133, state: "Patiala" },
+  { id: 153, state: "Patiala" },
 
-  // Jalandhar, Punjab (6 nodes)
-  { id: 124, state: "Jalandhar" },
-  { id: 131, state: "Jalandhar" },
-  { id: 139, state: "Jalandhar" },
+  // Jalandhar, Punjab (4 nodes)
+  { id: 126, state: "Jalandhar" },
+  { id: 138, state: "Jalandhar" },
   { id: 150, state: "Jalandhar" },
-  { id: 157, state: "Jalandhar" },
-  { id: 164, state: "Jalandhar" },
+  { id: 160, state: "Jalandhar" },
 
-  // Amritsar, Punjab (6 nodes)
+  // Amritsar, Punjab (3 nodes)
   { id: 125, state: "Amritsar" },
-  { id: 132, state: "Amritsar" },
   { id: 140, state: "Amritsar" },
-  { id: 151, state: "Amritsar" },
-  { id: 158, state: "Amritsar" },
-  { id: 165, state: "Amritsar" },
+  { id: 155, state: "Amritsar" },
 
-  // Bathinda, Punjab (6 nodes)
-  { id: 126, state: "Bathinda" },
-  { id: 133, state: "Bathinda" },
+  // Bathinda, Punjab (3 nodes)
+  { id: 128, state: "Bathinda" },
   { id: 141, state: "Bathinda" },
-  { id: 152, state: "Bathinda" },
-  { id: 159, state: "Bathinda" },
-  { id: 166, state: "Bathinda" },
+  { id: 164, state: "Bathinda" },
 
-  // Saharanpur, Uttar Pradesh (3 nodes)
-  { id: 134, state: "Saharanpur" },
-  { id: 142, state: "Saharanpur" },
-  { id: 167, state: "Saharanpur" },
+  // Saharanpur, Uttar Pradesh (2 nodes)
+  { id: 129, state: "Saharanpur" },
+  { id: 145, state: "Saharanpur" },
 
-  // Meerut, Uttar Pradesh (3 nodes)
-  { id: 143, state: "Meerut" },
-  { id: 144, state: "Meerut" },
-  { id: 168, state: "Meerut" },
+  // Meerut, Uttar Pradesh (2 nodes)
+  { id: 130, state: "Meerut" },
+  { id: 157, state: "Meerut" },
 
   // Noida, Uttar Pradesh (2 nodes)
-  { id: 145, state: "Noida" },
+  { id: 131, state: "Noida" },
   { id: 169, state: "Noida" }
 ];
 
@@ -319,7 +299,7 @@ export default function Devices() {
       {/* Main Grid: Map & Side panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[680px]">
         {/* Map Explorer Area */}
-        <Card className="lg:col-span-2 relative overflow-hidden bg-card border-border shadow-sm flex flex-col h-[400px] sm:h-[500px] lg:h-full">
+        <Card className="lg:col-span-2 relative overflow-hidden bg-card border-border shadow-sm flex flex-col h-[480px] sm:h-[580px] lg:h-full">
           {/* Map Controls */}
           <div className="p-4 border-b border-border flex flex-col sm:flex-row gap-3 items-center justify-between bg-card z-10">
             <div className="relative w-full sm:max-w-xs">
@@ -422,7 +402,7 @@ export default function Devices() {
                           <text
                             textAnchor="middle"
                             dominantBaseline="central"
-                            className="fill-primary-foreground font-sans font-bold text-[6px] select-none pointer-events-none"
+                            className="fill-primary-foreground font-sans font-bold text-[6px] select-none pointer-events-none animate-none"
                           >
                             {stateDevices.length}
                           </text>
@@ -467,6 +447,31 @@ export default function Devices() {
                 </g>
               </svg>
             </div>
+          </div>
+
+          {/* Compact Region Summary grid below map */}
+          <div className="p-4 border-t border-border bg-muted/10 grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs flex-shrink-0">
+            {Object.keys(regionToState).map((region) => {
+              const count = devicesData.filter(d => d.state === region).length;
+              const isRegionActive = activeState === region;
+              return (
+                <div 
+                  key={region} 
+                  onClick={() => handleStateClick(region)}
+                  className={cn(
+                    "flex items-center justify-between p-2 rounded border cursor-pointer transition-all hover:bg-muted/50 select-none",
+                    isRegionActive 
+                      ? "border-primary bg-primary/5 text-primary font-semibold shadow-sm"
+                      : "border-border text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <span>{region}</span>
+                  <span className="font-mono bg-muted dark:bg-zinc-800 px-1.5 py-0.5 rounded text-[10px] text-foreground font-semibold">
+                    {count} Dev
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </Card>
 
@@ -517,7 +522,7 @@ export default function Devices() {
                       </div>
                       <div>
                         <div className="font-mono text-sm font-bold text-foreground">
-                          Node ID: #{device.id}
+                          Node {device.id}
                         </div>
                         <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                           <MapPin className="w-3 h-3 text-muted-foreground" />
