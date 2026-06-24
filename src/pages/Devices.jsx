@@ -14,57 +14,77 @@ import { MapContainer, TileLayer, Marker, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// 30 Devices partitioned non-sequentially around Punjab (3-4 per region) and Western UP (2 per region)
+// 50 Devices partitioned non-sequentially around Punjab and Western UP regions
 const devicesData = [
-  // Ropar, Punjab (4 nodes)
+  // Ropar, Punjab (8 nodes)
   { id: 120, state: "Ropar" },
-  { id: 127, state: "Ropar" },
-  { id: 135, state: "Ropar" },
-  { id: 146, state: "Ropar" },
+  { id: 128, state: "Ropar" },
+  { id: 136, state: "Ropar" },
+  { id: 144, state: "Ropar" },
+  { id: 152, state: "Ropar" },
+  { id: 160, state: "Ropar" },
+  { id: 166, state: "Ropar" },
+  { id: 169, state: "Ropar" },
 
-  // Mohali, Punjab (3 nodes)
+  // Mohali, Punjab (7 nodes)
   { id: 121, state: "Mohali" },
-  { id: 132, state: "Mohali" },
-  { id: 148, state: "Mohali" },
+  { id: 129, state: "Mohali" },
+  { id: 137, state: "Mohali" },
+  { id: 145, state: "Mohali" },
+  { id: 153, state: "Mohali" },
+  { id: 161, state: "Mohali" },
+  { id: 167, state: "Mohali" },
 
-  // Ludhiana, Punjab (4 nodes)
-  { id: 124, state: "Ludhiana" },
-  { id: 139, state: "Ludhiana" },
-  { id: 151, state: "Ludhiana" },
+  // Ludhiana, Punjab (7 nodes)
+  { id: 122, state: "Ludhiana" },
+  { id: 130, state: "Ludhiana" },
+  { id: 138, state: "Ludhiana" },
+  { id: 146, state: "Ludhiana" },
+  { id: 154, state: "Ludhiana" },
   { id: 162, state: "Ludhiana" },
+  { id: 168, state: "Ludhiana" },
 
-  // Patiala, Punjab (3 nodes)
+  // Patiala, Punjab (6 nodes)
   { id: 123, state: "Patiala" },
-  { id: 133, state: "Patiala" },
-  { id: 153, state: "Patiala" },
+  { id: 131, state: "Patiala" },
+  { id: 139, state: "Patiala" },
+  { id: 147, state: "Patiala" },
+  { id: 155, state: "Patiala" },
+  { id: 163, state: "Patiala" },
 
-  // Jalandhar, Punjab (4 nodes)
-  { id: 126, state: "Jalandhar" },
-  { id: 138, state: "Jalandhar" },
-  { id: 150, state: "Jalandhar" },
-  { id: 160, state: "Jalandhar" },
+  // Jalandhar, Punjab (5 nodes)
+  { id: 124, state: "Jalandhar" },
+  { id: 132, state: "Jalandhar" },
+  { id: 140, state: "Jalandhar" },
+  { id: 148, state: "Jalandhar" },
+  { id: 156, state: "Jalandhar" },
 
-  // Amritsar, Punjab (3 nodes)
+  // Amritsar, Punjab (5 nodes)
   { id: 125, state: "Amritsar" },
-  { id: 140, state: "Amritsar" },
-  { id: 155, state: "Amritsar" },
+  { id: 133, state: "Amritsar" },
+  { id: 141, state: "Amritsar" },
+  { id: 149, state: "Amritsar" },
+  { id: 157, state: "Amritsar" },
 
-  // Bathinda, Punjab (3 nodes)
-  { id: 128, state: "Bathinda" },
-  { id: 141, state: "Bathinda" },
-  { id: 164, state: "Bathinda" },
+  // Bathinda, Punjab (4 nodes)
+  { id: 126, state: "Bathinda" },
+  { id: 134, state: "Bathinda" },
+  { id: 142, state: "Bathinda" },
+  { id: 150, state: "Bathinda" },
 
-  // Saharanpur, Uttar Pradesh (2 nodes)
-  { id: 129, state: "Saharanpur" },
-  { id: 145, state: "Saharanpur" },
+  // Saharanpur, Uttar Pradesh (3 nodes)
+  { id: 127, state: "Saharanpur" },
+  { id: 143, state: "Saharanpur" },
+  { id: 158, state: "Saharanpur" },
 
-  // Meerut, Uttar Pradesh (2 nodes)
-  { id: 130, state: "Meerut" },
-  { id: 157, state: "Meerut" },
+  // Meerut, Uttar Pradesh (3 nodes)
+  { id: 135, state: "Meerut" },
+  { id: 151, state: "Meerut" },
+  { id: 159, state: "Meerut" },
 
   // Noida, Uttar Pradesh (2 nodes)
-  { id: 131, state: "Noida" },
-  { id: 169, state: "Noida" }
+  { id: 164, state: "Noida" },
+  { id: 165, state: "Noida" }
 ];
 
 // Geographic coordinates for the 10 pilot regions
