@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { 
   RadioTower, 
   Search, 
@@ -10,7 +10,9 @@ import {
 } from 'lucide-react';
 import { cn } from '../utils/cn';
 import { Card, CardContent } from '../components/ui/Card';
-import { indiaMapData } from '../data/indiaMapData';
+import { MapContainer, TileLayer, Marker, Circle, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 // 30 Devices partitioned non-sequentially around Punjab (3-4 per region) and Western UP (2 per region)
 const devicesData = [
@@ -65,57 +67,18 @@ const devicesData = [
   { id: 169, state: "Noida" }
 ];
 
-const stateCenters = {
-  // States centroids for broad queries
-  "Andaman and Nicobar Islands": { x: 521, y: 609 },
-  "Andhra Pradesh": { x: 263, y: 500 },
-  "Arunachal Pradesh": { x: 550, y: 224 },
-  "Assam": { x: 516, y: 271 },
-  "Bihar": { x: 369, y: 275 },
-  "Chandigarh": { x: 180, y: 160 },
-  "Chhattisgarh": { x: 296, y: 388 },
-  "Daman and Diu": { x: 55, y: 391 },
-  "Delhi": { x: 186, y: 210 },
-  "Dadra and Nagar Haveli": { x: 102, y: 405 },
-  "Goa": { x: 122, y: 512 },
-  "Gujarat": { x: 66, y: 355 },
-  "Himachal Pradesh": { x: 190, y: 133 },
-  "Haryana": { x: 164, y: 194 },
-  "Jharkhand": { x: 366, y: 327 },
-  "Jammu and Kashmir": { x: 144, y: 88 },
-  "Karnataka": { x: 170, y: 518 },
-  "Kerala": { x: 166, y: 615 },
-  "Ladakh": { x: 173, y: 60 },
-  "Lakshadweep": { x: 99, y: 627 },
-  "Maharashtra": { x: 179, y: 435 },
-  "Meghalaya": { x: 485, y: 283 },
-  "Manipur": { x: 537, y: 301 },
-  "Madhya Pradesh": { x: 214, y: 319 },
-  "Mizoram": { x: 516, y: 337 },
-  "Nagaland": { x: 547, y: 270 },
-  "Odisha": { x: 340, y: 405 },
-  "Punjab": { x: 151, y: 152 },
-  "Puducherry": { x: 268, y: 545 },
-  "Rajasthan": { x: 119, y: 257 },
-  "Sikkim": { x: 424, y: 235 },
-  "Telangana": { x: 237, y: 457 },
-  "Tamil Nadu": { x: 211, y: 609 },
-  "Tripura": { x: 493, y: 325 },
-  "Uttar Pradesh": { x: 265, y: 245 },
-  "Uttarakhand": { x: 232, y: 176 },
-  "West Bengal": { x: 412, y: 310 },
-
-  // Pilot deployment region centroids
-  "Ropar": { x: 162, y: 142 },
-  "Mohali": { x: 166, y: 149 },
-  "Patiala": { x: 160, y: 156 },
-  "Ludhiana": { x: 153, y: 147 },
-  "Jalandhar": { x: 148, y: 141 },
-  "Amritsar": { x: 140, y: 137 },
-  "Bathinda": { x: 142, y: 158 },
-  "Saharanpur": { x: 181, y: 166 },
-  "Meerut": { x: 188, y: 185 },
-  "Noida": { x: 186, y: 202 }
+// Geographic coordinates for the 10 pilot regions
+const regionCoordinates = {
+  "Ropar": [30.97, 76.53],
+  "Mohali": [30.68, 76.72],
+  "Ludhiana": [30.90, 75.86],
+  "Patiala": [30.34, 76.39],
+  "Jalandhar": [31.33, 75.58],
+  "Amritsar": [31.63, 74.87],
+  "Bathinda": [30.21, 74.95],
+  "Saharanpur": [29.97, 77.55],
+  "Meerut": [28.98, 77.71],
+  "Noida": [28.54, 77.39]
 };
 
 const regionToState = {
@@ -130,6 +93,17 @@ const regionToState = {
   "Meerut": "Uttar Pradesh",
   "Noida": "Uttar Pradesh"
 };
+
+// Map View Controller to center and zoom programmatically
+function MapViewController({ center, zoom }) {
+  const map = useMap();
+  useEffect(() => {
+    if (center) {
+      map.setView(center, zoom, { animate: true, duration: 1.0 });
+    }
+  }, [center, zoom, map]);
+  return null;
+}
 
 export default function Devices() {
   const [selectedState, setSelectedState] = useState(null);
@@ -147,7 +121,7 @@ export default function Devices() {
     const query = searchQuery.trim().toLowerCase();
 
     // Check exact region or state name match
-    const exactState = Object.keys(stateCenters).find(state => 
+    const exactState = Object.keys(regionCoordinates).find(state => 
       state.toLowerCase() === query
     );
     if (exactState) return exactState;
@@ -159,7 +133,7 @@ export default function Devices() {
     if (matchingDevice) return matchingDevice.state;
 
     // Check partial name match
-    const partialState = Object.keys(stateCenters).find(state => 
+    const partialState = Object.keys(regionCoordinates).find(state => 
       state.toLowerCase().includes(query)
     );
     if (partialState) return partialState;
@@ -190,40 +164,21 @@ export default function Devices() {
     return activeState;
   }, [activeState]);
 
-  // Compute zoom & translation transform based on selection/search
-  const zoomTransform = useMemo(() => {
-    // If no state/region is active, default to a focused, centered view on Punjab & surrounding areas
+  // Compute map center and zoom level dynamically
+  const mapConfig = useMemo(() => {
     if (!activeState) {
-      const defaultCenter = { x: 162, y: 154 }; // Centroid of the pilot area
-      const defaultScale = 3.2; // Zoomed in focus on Punjab and Western UP
-      const tx = 306 - defaultCenter.x * defaultScale;
-      const ty = 348 - defaultCenter.y * defaultScale;
-      return {
-        transform: `translate(${tx}px, ${ty}px) scale(${defaultScale})`,
-        transformOrigin: '0 0',
-        transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
-      };
+      return { center: [30.2, 76.1], zoom: 7 };
     }
-
-    const center = stateCenters[activeState];
-    if (!center) {
-      return {
-        transform: 'translate(0px, 0px) scale(1)',
-        transformOrigin: 'center center',
-        transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
-      };
+    if (regionCoordinates[activeState]) {
+      return { center: regionCoordinates[activeState], zoom: 10 };
     }
-    
-    // Zoom in closer for specific cities, moderate zoom for broad state selections
-    const isState = ["Punjab", "Uttar Pradesh"].includes(activeState);
-    const scale = isState ? 3.5 : 5.2;
-    const tx = 306 - center.x * scale;
-    const ty = 348 - center.y * scale;
-    return {
-      transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
-      transformOrigin: '0 0',
-      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
-    };
+    if (activeState === "Punjab") {
+      return { center: [31.0, 75.8], zoom: 8 };
+    }
+    if (activeState === "Uttar Pradesh") {
+      return { center: [29.3, 77.5], zoom: 9 };
+    }
+    return { center: [30.2, 76.1], zoom: 7 };
   }, [activeState]);
 
   const handleStateClick = (stateName) => {
@@ -234,6 +189,24 @@ export default function Devices() {
   const handleClearSearch = () => {
     setSearchQuery('');
     setSelectedState(null);
+  };
+
+  // Custom marker generator with leaflet divIcon
+  const createClusterIcon = (regionName, count) => {
+    const isSelected = activeState === regionName;
+    const isUP = regionToState[regionName] === "Uttar Pradesh";
+    const colorClass = isUP
+      ? (isSelected ? 'bg-amber-500 ring-4 ring-amber-500/30' : 'bg-amber-600')
+      : (isSelected ? 'bg-emerald-500 ring-4 ring-emerald-500/30' : 'bg-emerald-600');
+
+    return L.divIcon({
+      html: `<div class="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-sm shadow-md border border-white ${colorClass} transition-all duration-300 transform ${isSelected ? 'scale-110' : ''}">
+               ${count}
+             </div>`,
+      className: 'custom-leaflet-icon-container',
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
   };
 
   return (
@@ -336,122 +309,72 @@ export default function Devices() {
           </div>
 
           {/* Map Container */}
-          <div className="flex-1 relative bg-gradient-to-br from-slate-50 to-slate-100 dark:from-zinc-950/20 dark:to-zinc-900/40 w-full h-full overflow-hidden flex items-center justify-center p-4 border border-border/50 rounded-lg">
-            <div className="w-[90%] sm:w-[80%] h-[90%] sm:h-[80%] max-w-[580px] max-h-[660px] relative flex items-center justify-center">
-              <svg 
-                viewBox={indiaMapData.viewBox}
-                className="w-full h-full object-contain drop-shadow-md select-none"
-              >
-                {/* SVG Transform group for Zoom & Translate */}
-                <g style={zoomTransform}>
-                  {/* Render State Paths translated from react-svgmap-india space to 0 0 612 696 */}
-                  <g transform="translate(114, 50.4)">
-                    {indiaMapData.locations.map((loc) => {
-                      const isSelected = activeState === loc.name || (activeState && regionToState[activeState] === loc.name);
-                      return (
-                        <path
-                          key={loc.id}
-                          d={loc.path}
-                          onClick={() => handleStateClick(loc.name)}
-                          className={cn(
-                            "transition-all duration-300 stroke-1 cursor-pointer focus:outline-none",
-                            isSelected
-                              ? "fill-primary/30 stroke-primary stroke-[1.5px]"
-                              : "fill-slate-200/80 dark:fill-zinc-800/80 stroke-slate-400 dark:stroke-zinc-700 hover:fill-primary/15 dark:hover:fill-primary/20 hover:stroke-primary/50"
-                          )}
-                          title={loc.name}
-                        />
-                      );
-                    })}
-                  </g>
+          <div className="flex-1 relative w-full h-full overflow-hidden border border-border/50 rounded-lg">
+            <MapContainer
+              center={mapConfig.center}
+              zoom={mapConfig.zoom}
+              scrollWheelZoom={true}
+              className="w-full h-full z-0"
+            >
+              <MapViewController center={mapConfig.center} zoom={mapConfig.zoom} />
+              
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
 
-                  {/* Render Markers/Pins on state centers - filtered only to states/regions with devices */}
-                  {Object.entries(stateCenters)
-                    .filter(([stateName]) => devicesData.some(d => d.state === stateName))
-                    .map(([stateName, center]) => {
-                      const isSelected = activeState === stateName;
-                      const stateDevices = devicesData.filter(d => d.state === stateName);
-                      
-                      return (
-                        <g 
-                          key={stateName} 
-                          transform={`translate(${center.x}, ${center.y})`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleStateClick(stateName);
-                          }}
-                          className="cursor-pointer group"
-                        >
-                          {/* Pulse Ring with smooth scale-up hover */}
-                          <circle 
-                            r={isSelected ? 16 : 10} 
-                            className={cn(
-                              "fill-primary/20 transition-all duration-300 group-hover:scale-125",
-                              isSelected ? "animate-pulse" : ""
-                            )} 
-                          />
-                          {/* Outer Glow */}
-                          <circle 
-                            r={isSelected ? 10 : 7} 
-                            className={cn(
-                              "fill-primary transition-all duration-300 stroke-background group-hover:fill-primary/80 group-hover:scale-110",
-                              isSelected ? "stroke-[2px]" : "stroke-1"
-                            )} 
-                          />
-                          {/* Marker Count Text */}
-                          <text
-                            textAnchor="middle"
-                            dominantBaseline="central"
-                            className="fill-primary-foreground font-sans font-bold text-[6px] select-none pointer-events-none animate-none"
-                          >
-                            {stateDevices.length}
-                          </text>
+              {/* Render Leaflet Markers for the 10 pilot regions */}
+              {Object.entries(regionCoordinates).map(([regionName, coords]) => {
+                const isSelected = activeState === regionName;
+                const regionDevices = devicesData.filter(d => d.state === regionName);
+                const isUP = regionToState[regionName] === "Uttar Pradesh";
 
-                          {/* Hover Tooltip Overlay */}
-                          <g 
-                            transform="translate(0, -20)" 
-                            className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50"
-                          >
-                            <rect 
-                              x="-60" 
-                              y="-36" 
-                              width="120" 
-                              height="38" 
-                              rx="6" 
-                              className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30 stroke shadow-xl"
-                            />
-                            <polygon 
-                              points="-5,-2 5,-2 0,3" 
-                              className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30"
-                            />
-                            <text 
-                              x="0" 
-                              y="-24" 
-                              textAnchor="middle" 
-                              className="fill-zinc-50 font-bold text-[9px] tracking-wide"
-                            >
-                              {stateName} ({regionToState[stateName] === "Uttar Pradesh" ? "UP" : regionToState[stateName]})
-                            </text>
-                            <text 
-                              x="0" 
-                              y="-12" 
-                              textAnchor="middle" 
-                              className="fill-primary text-[8px] font-mono font-semibold"
-                            >
-                              Devices: {stateDevices.length}
-                            </text>
-                          </g>
-                        </g>
-                      );
-                    })}
-                </g>
-              </svg>
+                return (
+                  <div key={regionName}>
+                    <Marker
+                      position={coords}
+                      icon={createClusterIcon(regionName, regionDevices.length)}
+                      eventHandlers={{
+                        click: () => handleStateClick(regionName)
+                      }}
+                    />
+
+                    {/* Dotted highlight ring around selected region marker */}
+                    {isSelected && (
+                      <Circle
+                        center={coords}
+                        radius={6000} // 6km highlighted boundary ring
+                        pathOptions={{
+                          color: isUP ? '#d97706' : '#059669',
+                          fillColor: isUP ? '#fbbf24' : '#34d399',
+                          fillOpacity: 0.15,
+                          weight: 2,
+                          dashArray: '5, 5'
+                        }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </MapContainer>
+
+            {/* Map Legend Overlay */}
+            <div className="absolute bottom-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm border border-border p-3 rounded-lg shadow-md text-[10px] space-y-1.5 pointer-events-auto select-none">
+              <div className="font-semibold text-foreground">Deployment Legend</div>
+              <div className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 border border-white inline-block"></span>
+                <span className="text-muted-foreground font-medium">Punjab Deployment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 rounded-full bg-amber-600 border border-white inline-block"></span>
+                <span className="text-muted-foreground font-medium">Uttar Pradesh Deployment</span>
+              </div>
             </div>
           </div>
 
           {/* Compact Region Summary grid below map */}
           <div className="p-4 border-t border-border bg-muted/10 grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs flex-shrink-0">
-            {Object.keys(regionToState).map((region) => {
+            {Object.keys(regionCoordinates).map((region) => {
               const count = devicesData.filter(d => d.state === region).length;
               const isRegionActive = activeState === region;
               return (
