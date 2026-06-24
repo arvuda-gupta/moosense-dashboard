@@ -12,85 +12,77 @@ import { cn } from '../utils/cn';
 import { Card, CardContent } from '../components/ui/Card';
 import { indiaMapData } from '../data/indiaMapData';
 
-// 50 Devices (IDs 120-169) partitioned around Ropar and nearby pilot agricultural regions
+// 50 Devices (IDs 120-169) partitioned non-sequentially around Punjab and Western UP regions
 const devicesData = [
-  // Ropar (Rupnagar), Punjab (8 nodes)
-  { id: 120, state: "Ropar (Rupnagar)" },
-  { id: 121, state: "Ropar (Rupnagar)" },
-  { id: 122, state: "Ropar (Rupnagar)" },
-  { id: 123, state: "Ropar (Rupnagar)" },
-  { id: 124, state: "Ropar (Rupnagar)" },
-  { id: 125, state: "Ropar (Rupnagar)" },
-  { id: 126, state: "Ropar (Rupnagar)" },
-  { id: 127, state: "Ropar (Rupnagar)" },
+  // Ropar, Punjab (6 nodes)
+  { id: 120, state: "Ropar" },
+  { id: 127, state: "Ropar" },
+  { id: 135, state: "Ropar" },
+  { id: 146, state: "Ropar" },
+  { id: 153, state: "Ropar" },
+  { id: 160, state: "Ropar" },
 
   // Mohali, Punjab (6 nodes)
+  { id: 121, state: "Mohali" },
   { id: 128, state: "Mohali" },
-  { id: 129, state: "Mohali" },
-  { id: 130, state: "Mohali" },
-  { id: 131, state: "Mohali" },
-  { id: 132, state: "Mohali" },
-  { id: 133, state: "Mohali" },
-
-  // Patiala, Punjab (6 nodes)
-  { id: 134, state: "Patiala" },
-  { id: 135, state: "Patiala" },
-  { id: 136, state: "Patiala" },
-  { id: 137, state: "Patiala" },
-  { id: 138, state: "Patiala" },
-  { id: 139, state: "Patiala" },
+  { id: 136, state: "Mohali" },
+  { id: 147, state: "Mohali" },
+  { id: 154, state: "Mohali" },
+  { id: 161, state: "Mohali" },
 
   // Ludhiana, Punjab (6 nodes)
-  { id: 140, state: "Ludhiana" },
-  { id: 141, state: "Ludhiana" },
-  { id: 142, state: "Ludhiana" },
-  { id: 143, state: "Ludhiana" },
-  { id: 144, state: "Ludhiana" },
-  { id: 145, state: "Ludhiana" },
+  { id: 122, state: "Ludhiana" },
+  { id: 129, state: "Ludhiana" },
+  { id: 137, state: "Ludhiana" },
+  { id: 148, state: "Ludhiana" },
+  { id: 155, state: "Ludhiana" },
+  { id: 162, state: "Ludhiana" },
 
-  // Jalandhar, Punjab (4 nodes)
-  { id: 146, state: "Jalandhar" },
-  { id: 147, state: "Jalandhar" },
-  { id: 148, state: "Jalandhar" },
-  { id: 149, state: "Jalandhar" },
+  // Patiala, Punjab (6 nodes)
+  { id: 123, state: "Patiala" },
+  { id: 130, state: "Patiala" },
+  { id: 138, state: "Patiala" },
+  { id: 149, state: "Patiala" },
+  { id: 156, state: "Patiala" },
+  { id: 163, state: "Patiala" },
 
-  // Amritsar, Punjab (3 nodes)
-  { id: 150, state: "Amritsar" },
+  // Jalandhar, Punjab (6 nodes)
+  { id: 124, state: "Jalandhar" },
+  { id: 131, state: "Jalandhar" },
+  { id: 139, state: "Jalandhar" },
+  { id: 150, state: "Jalandhar" },
+  { id: 157, state: "Jalandhar" },
+  { id: 164, state: "Jalandhar" },
+
+  // Amritsar, Punjab (6 nodes)
+  { id: 125, state: "Amritsar" },
+  { id: 132, state: "Amritsar" },
+  { id: 140, state: "Amritsar" },
   { id: 151, state: "Amritsar" },
-  { id: 152, state: "Amritsar" },
+  { id: 158, state: "Amritsar" },
+  { id: 165, state: "Amritsar" },
 
-  // Bathinda, Punjab (3 nodes)
-  { id: 153, state: "Bathinda" },
-  { id: 154, state: "Bathinda" },
-  { id: 155, state: "Bathinda" },
+  // Bathinda, Punjab (6 nodes)
+  { id: 126, state: "Bathinda" },
+  { id: 133, state: "Bathinda" },
+  { id: 141, state: "Bathinda" },
+  { id: 152, state: "Bathinda" },
+  { id: 159, state: "Bathinda" },
+  { id: 166, state: "Bathinda" },
 
-  // Saharanpur, Uttar Pradesh (1 node)
-  { id: 156, state: "Saharanpur" },
+  // Saharanpur, Uttar Pradesh (3 nodes)
+  { id: 134, state: "Saharanpur" },
+  { id: 142, state: "Saharanpur" },
+  { id: 167, state: "Saharanpur" },
 
-  // Meerut, Uttar Pradesh (1 node)
-  { id: 157, state: "Meerut" },
+  // Meerut, Uttar Pradesh (3 nodes)
+  { id: 143, state: "Meerut" },
+  { id: 144, state: "Meerut" },
+  { id: 168, state: "Meerut" },
 
-  // Noida, Uttar Pradesh (1 node)
-  { id: 158, state: "Noida" },
-
-  // Ambala, Haryana (3 nodes)
-  { id: 159, state: "Ambala" },
-  { id: 160, state: "Ambala" },
-  { id: 161, state: "Ambala" },
-
-  // Kurukshetra, Haryana (3 nodes)
-  { id: 162, state: "Kurukshetra" },
-  { id: 163, state: "Kurukshetra" },
-  { id: 164, state: "Kurukshetra" },
-
-  // Una, Himachal Pradesh (3 nodes)
-  { id: 165, state: "Una" },
-  { id: 166, state: "Una" },
-  { id: 167, state: "Una" },
-
-  // Solan, Himachal Pradesh (2 nodes)
-  { id: 168, state: "Solan" },
-  { id: 169, state: "Solan" }
+  // Noida, Uttar Pradesh (2 nodes)
+  { id: 145, state: "Noida" },
+  { id: 169, state: "Noida" }
 ];
 
 const stateCenters = {
@@ -134,7 +126,7 @@ const stateCenters = {
   "West Bengal": { x: 412, y: 310 },
 
   // Pilot deployment region centroids
-  "Ropar (Rupnagar)": { x: 162, y: 142 },
+  "Ropar": { x: 162, y: 142 },
   "Mohali": { x: 166, y: 149 },
   "Patiala": { x: 160, y: 156 },
   "Ludhiana": { x: 153, y: 147 },
@@ -143,15 +135,11 @@ const stateCenters = {
   "Bathinda": { x: 142, y: 158 },
   "Saharanpur": { x: 181, y: 166 },
   "Meerut": { x: 188, y: 185 },
-  "Noida": { x: 186, y: 202 },
-  "Ambala": { x: 172, y: 154 },
-  "Kurukshetra": { x: 174, y: 163 },
-  "Una": { x: 164, y: 134 },
-  "Solan": { x: 171, y: 142 }
+  "Noida": { x: 186, y: 202 }
 };
 
 const regionToState = {
-  "Ropar (Rupnagar)": "Punjab",
+  "Ropar": "Punjab",
   "Mohali": "Punjab",
   "Patiala": "Punjab",
   "Ludhiana": "Punjab",
@@ -160,29 +148,25 @@ const regionToState = {
   "Bathinda": "Punjab",
   "Saharanpur": "Uttar Pradesh",
   "Meerut": "Uttar Pradesh",
-  "Noida": "Uttar Pradesh",
-  "Ambala": "Haryana",
-  "Kurukshetra": "Haryana",
-  "Una": "Himachal Pradesh",
-  "Solan": "Himachal Pradesh"
+  "Noida": "Uttar Pradesh"
 };
 
 export default function Devices() {
   const [selectedState, setSelectedState] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Find unique states
-  const totalLocations = useMemo(() => {
-    const states = new Set(devicesData.map(d => d.state));
-    return states.size;
+  // Find unique regions count
+  const totalRegions = useMemo(() => {
+    const regions = new Set(devicesData.map(d => d.state));
+    return regions.size;
   }, []);
 
-  // Search logic to automatically select matching state
+  // Search logic to automatically select matching region/state
   const searchedState = useMemo(() => {
     if (!searchQuery) return null;
     const query = searchQuery.trim().toLowerCase();
 
-    // Check exact state name match
+    // Check exact region or state name match
     const exactState = Object.keys(stateCenters).find(state => 
       state.toLowerCase() === query
     );
@@ -194,7 +178,7 @@ export default function Devices() {
     );
     if (matchingDevice) return matchingDevice.state;
 
-    // Check partial state name match
+    // Check partial name match
     const partialState = Object.keys(stateCenters).find(state => 
       state.toLowerCase().includes(query)
     );
@@ -203,10 +187,10 @@ export default function Devices() {
     return null;
   }, [searchQuery]);
 
-  // Active state is derived from search match or selection
+  // Active state/region is derived from search match or selection
   const activeState = searchedState || selectedState;
 
-  // Filter devices by selected/searched state - maps regions to states correctly
+  // Filter devices by selected/searched state/region
   const displayedDevices = useMemo(() => {
     if (!activeState) return devicesData;
     return devicesData.filter(d => 
@@ -215,12 +199,23 @@ export default function Devices() {
     );
   }, [activeState]);
 
+  // Format the text for the Selected Location KPI card dynamically
+  const selectedLocationText = useMemo(() => {
+    if (!activeState) return "All Locations";
+    if (regionToState[activeState]) {
+      const parentState = regionToState[activeState];
+      const stateAbbr = parentState === "Uttar Pradesh" ? "UP" : parentState;
+      return `${activeState} (${stateAbbr})`;
+    }
+    return activeState;
+  }, [activeState]);
+
   // Compute zoom & translation transform based on selection/search
   const zoomTransform = useMemo(() => {
     // If no state/region is active, default to a focused, centered view on Punjab & surrounding areas
     if (!activeState) {
       const defaultCenter = { x: 162, y: 154 }; // Centroid of the pilot area
-      const defaultScale = 3.2; // Zoomed in focus on Punjab/Haryana/HP/West UP
+      const defaultScale = 3.2; // Zoomed in focus on Punjab and Western UP
       const tx = 306 - defaultCenter.x * defaultScale;
       const ty = 348 - defaultCenter.y * defaultScale;
       return {
@@ -240,7 +235,7 @@ export default function Devices() {
     }
     
     // Zoom in closer for specific cities, moderate zoom for broad state selections
-    const isState = ["Punjab", "Haryana", "Himachal Pradesh", "Uttar Pradesh"].includes(activeState);
+    const isState = ["Punjab", "Uttar Pradesh"].includes(activeState);
     const scale = isState ? 3.5 : 5.2;
     const tx = 306 - center.x * scale;
     const ty = 348 - center.y * scale;
@@ -270,7 +265,7 @@ export default function Devices() {
           Livestock IoT Device Explorer
         </h1>
         <p className="text-sm text-muted-foreground">
-          Geographic monitoring and asset mapping of deployed telemetric collar nodes across the subcontinent.
+          Geographic monitoring and asset mapping of deployed telemetric collar nodes across the pilot area.
         </p>
       </div>
 
@@ -280,7 +275,7 @@ export default function Devices() {
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Devices</p>
-              <h3 className="text-2xl font-bold text-foreground mt-1">{devicesData.length}</h3>
+              <h3 className="text-2xl font-bold text-foreground mt-1">{devicesData.length} Devices</h3>
             </div>
             <div className="p-2.5 bg-primary/10 rounded-lg text-primary">
               <Cpu className="w-5 h-5" />
@@ -291,8 +286,8 @@ export default function Devices() {
         <Card className="bg-card border-border shadow-sm">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Locations</p>
-              <h3 className="text-2xl font-bold text-foreground mt-1">{totalLocations} States</h3>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Total Regions</p>
+              <h3 className="text-2xl font-bold text-foreground mt-1">{totalRegions} Regions</h3>
             </div>
             <div className="p-2.5 bg-primary/10 rounded-lg text-primary">
               <Globe className="w-5 h-5" />
@@ -308,7 +303,7 @@ export default function Devices() {
             <div>
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Selected Location</p>
               <h3 className="text-xl font-bold text-foreground mt-1 truncate max-w-[200px]">
-                {activeState || "All Locations"}
+                {selectedLocationText}
               </h3>
             </div>
             <div className={cn(
@@ -331,7 +326,7 @@ export default function Devices() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search State or Device ID..."
+                placeholder="Search Region or Device ID..."
                 className="w-full bg-muted/50 border border-border rounded-full pl-9 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -348,7 +343,7 @@ export default function Devices() {
 
             <div className="flex gap-2 items-center text-xs text-muted-foreground">
               <Navigation className="w-3.5 h-3.5" />
-              <span>Click states or markers to zoom/explore</span>
+              <span>Click regions or markers to zoom/explore</span>
               {activeState && (
                 <button
                   onClick={handleClearSearch}
@@ -390,7 +385,7 @@ export default function Devices() {
                     })}
                   </g>
 
-                  {/* Render Markers/Pins on state centers - filtered only to states with devices */}
+                  {/* Render Markers/Pins on state centers - filtered only to states/regions with devices */}
                   {Object.entries(stateCenters)
                     .filter(([stateName]) => devicesData.some(d => d.state === stateName))
                     .map(([stateName, center]) => {
@@ -409,7 +404,7 @@ export default function Devices() {
                         >
                           {/* Pulse Ring with smooth scale-up hover */}
                           <circle 
-                            r={isSelected ? 18 : 12} 
+                            r={isSelected ? 16 : 10} 
                             className={cn(
                               "fill-primary/20 transition-all duration-300 group-hover:scale-125",
                               isSelected ? "animate-pulse" : ""
@@ -417,44 +412,53 @@ export default function Devices() {
                           />
                           {/* Outer Glow */}
                           <circle 
-                            r={isSelected ? 8 : 6} 
+                            r={isSelected ? 10 : 7} 
                             className={cn(
                               "fill-primary transition-all duration-300 stroke-background group-hover:fill-primary/80 group-hover:scale-110",
                               isSelected ? "stroke-[2px]" : "stroke-1"
                             )} 
                           />
-                          {/* Professional Hover Tooltip Overlay */}
+                          {/* Marker Count Text */}
+                          <text
+                            textAnchor="middle"
+                            dominantBaseline="central"
+                            className="fill-primary-foreground font-sans font-bold text-[6px] select-none pointer-events-none"
+                          >
+                            {stateDevices.length}
+                          </text>
+
+                          {/* Hover Tooltip Overlay */}
                           <g 
-                            transform="translate(0, -22)" 
+                            transform="translate(0, -20)" 
                             className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50"
                           >
                             <rect 
-                              x="-70" 
-                              y="-42" 
-                              width="140" 
-                              height="46" 
+                              x="-60" 
+                              y="-36" 
+                              width="120" 
+                              height="38" 
                               rx="6" 
                               className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30 stroke shadow-xl"
                             />
                             <polygon 
-                              points="-6,-4 6,-4 0,2" 
+                              points="-5,-2 5,-2 0,3" 
                               className="fill-zinc-950/95 dark:fill-zinc-900/95 stroke-border/30"
                             />
                             <text 
                               x="0" 
-                              y="-28" 
+                              y="-24" 
                               textAnchor="middle" 
-                              className="fill-zinc-50 font-bold text-[10px] tracking-wide"
+                              className="fill-zinc-50 font-bold text-[9px] tracking-wide"
                             >
-                              {stateName}
+                              {stateName} ({regionToState[stateName] === "Uttar Pradesh" ? "UP" : regionToState[stateName]})
                             </text>
                             <text 
                               x="0" 
-                              y="-14" 
+                              y="-12" 
                               textAnchor="middle" 
                               className="fill-primary text-[8px] font-mono font-semibold"
                             >
-                              Nodes: {stateDevices.map(d => d.id).join(', ')}
+                              Devices: {stateDevices.length}
                             </text>
                           </g>
                         </g>
@@ -488,6 +492,29 @@ export default function Devices() {
             )}
           </div>
 
+          {/* List area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-none">
+            {displayedDevices.length > 0 ? (
+              displayedDevices.map((device) => {
+                const isHighlighted = searchQuery && device.id.toString() === searchQuery.trim();
+                
+                return (
+                  <div 
+                    key={device.id} 
+                    className={cn(
+                      "flex items-center justify-between p-3.5 rounded-lg border transition-all duration-200",
+                      isHighlighted 
+                        ? "bg-primary/10 border-primary ring-2 ring-primary/20 scale-[1.02] shadow-sm"
+                        : "bg-muted/30 dark:bg-muted/5 border-border hover:border-muted-foreground/30 hover:bg-muted/50"
+                    )}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        "p-2 rounded-lg",
+                        isHighlighted ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
+                      )}>
+                        <Cpu className="w-4 h-4" />
+                      </div>
                       <div>
                         <div className="font-mono text-sm font-bold text-foreground">
                           Node ID: #{device.id}
